@@ -6,6 +6,8 @@
         "thread_sleep.cc"
       ],
       "include_dirs": ["<!(node -e \"require('nan')\")"],
+      'cflags_cc!': ['-std=c++11'],
+      'cflags_cc+': ['-std=c++11'],
       "conditions": [
           [ 'OS=="mac"', {
               "xcode_settings": {
