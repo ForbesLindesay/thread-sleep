@@ -5,7 +5,6 @@ environment:
   node_pre_gyp_secretAccessKey:
     secure: SECURE_ENV_VAR
 
-# The dependencies we need are only available in the unstable version of the server, we need them to build node-opencv
 os: unstable
 
 # This does not actually create builds with different windows architectures
@@ -45,8 +44,6 @@ before_build:
 - cmd: npm install -g node-gyp
 - cmd: SET APP_PATH=%CD%
 - cmd: CD %APP_PATH%
-- cmd: SET OPENCV_DIR=%OPENCV_ROOT_PATH%\build\%ARCH%\vc12\bin
-- cmd: SET PATH=%cd%\node_modules\.bin\;C:\MinGW\bin;C:\GTK\bin;C:\msys\1.0\bin;%OPENCV_DIR%;%PATH%
 - cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
 
 
@@ -68,8 +65,6 @@ build_script:
 
 after_build:
   - cmd: SET ARCH=x86
-  - cmd: SET OPENCV_DIR=%OPENCV_ROOT_PATH%\build\%ARCH%\vc12\bin
-  - cmd: SET PATH=%OPENCV_DIR%;%PATH%
   - cmd: SET NODIST_X64=0
   - cmd: call nodist update
   - cmd: call nodist stable
@@ -79,7 +74,6 @@ after_build:
   # otherwise some bindings and libraries might now be available, an error will trigger
   - cmd: npm install --build-from-source --msvs_version=2013
   - cmd: npm test
-  - cmd: node lib/opencv.js
   - cmd: ECHO "PUBLISH x86 binary package:"
   - cmd: npm install aws-sdk
   - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
