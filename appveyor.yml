@@ -3,32 +3,20 @@ environment:
     # custom visual studio 2014 builds
     - nodejs_version: 0.10
       platform: x86
-      msvs_toolset: 14
-      BUILD_ARGS: --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11 --toolset=v140
     - nodejs_version: 0.10
       platform: x64
-      msvs_toolset: 14
-      BUILD_ARGS: --dist-url=https://s3.amazonaws.com/mapbox/node-cpp11 --toolset=v140
 
 os: Visual Studio 2014 CTP4
 
 install:
-  # add local node to path (since we install it for msvs_toolset == 14)
-  - SET PATH=%CD%;%PATH%;
-  # add local node-pre-gyp dir to path
-  - SET PATH=node_modules\.bin;%PATH%
+  # Get the latest stable version of Node 0.STABLE.latest
+  - ps: Install-Product node $env:nodejs_version
   # use 64 bit python if platform is 64 bit
   - if "%platform%" == "x64" set PATH=C:\Python27-x64;%PATH%
-  - SET ARCHPATH=
-  - if %platform% == x64 (SET ARCHPATH=x64/)
-  # install node version per visual studio toolset
-  - powershell Write-Output "fetching https://mapbox.s3.amazonaws.com/node-cpp11/v$env:nodejs_version/${env:ARCHPATH}node.exe"
-  - powershell Start-FileDownload "https://mapbox.s3.amazonaws.com/node-cpp11/v$env:nodejs_version/${env:ARCHPATH}node.exe"
   - node -v
   - node -e "console.log(process.argv,process.execPath)"
   - npm -v
   # clear out node-gyp header cache
-  - rd /s /q %USERPROFILE%\.node-gyp
   - SET PATH=C:\Program Files (x86)\MSBuild\%msvs_toolset%.0\bin;%PATH%
   - SET PATH=C:\Program Files (x86)\Microsoft Visual Studio %msvs_toolset%.0\VC\bin;%PATH%
   - if %platform% == x64 CALL "C:\Program Files (x86)\Microsoft Visual Studio %msvs_toolset%.0\VC\vcvarsall.bat" amd64
