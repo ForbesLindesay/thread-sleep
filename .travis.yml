@@ -4,17 +4,12 @@ os:
 - linux
 - osx
 
-env:
-  matrix:
-    - NODE_VERSION="0.8"
-    - NODE_VERSION="0.10"
-
 before_install:
 - export PATH=./node_modules/.bin/:$PATH
 - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
 - source ~/.nvm/nvm.sh
-- nvm install $NODE_VERSION
-- nvm use $NODE_VERSION
+- nvm install 0.10
+- nvm use 0.10
 # get commit message
 - COMMIT_MESSAGE=$(git show -s --format=%B $TRAVIS_COMMIT | tr -d '\n')
 # put local node-pre-gyp on PATH
