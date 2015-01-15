@@ -4,6 +4,9 @@ os:
 - linux
 - osx
 
+# What we'll be using to compile
+compiler: clang
+
 before_install:
 - export PATH=./node_modules/.bin/:$PATH
 - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
