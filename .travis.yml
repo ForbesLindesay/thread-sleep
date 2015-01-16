@@ -11,10 +11,10 @@ compiler:
 
 before_install:
 # make sure gcc is up to date
-- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CXX" = "g++" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CXX" = "g++" ]; then sudo apt-get update -qq
-- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
-- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" = "g++" ]] then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" = "g++" ]] then sudo apt-get update -qq
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" = "g++" ]] then sudo apt-get install -qq g++-4.8; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" = "g++" ]] then export CXX="g++-4.8" CC="gcc-4.8"; fi
 # set up nvm
 - export PATH=./node_modules/.bin/:$PATH
 - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
