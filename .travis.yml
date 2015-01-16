@@ -11,7 +11,7 @@ compiler:
 
 before_install:
 # tell clang to ignore args it doesn't understand
-- ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future 
+- export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future 
 # make sure gcc is up to date
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" == "g++" ]]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" == "g++" ]]; then sudo apt-get update -qq; fi
