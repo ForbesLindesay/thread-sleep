@@ -10,14 +10,12 @@ compiler:
 - clang
 
 before_install:
-# tell clang to ignore args it doesn't understand
-- export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future 
 # make sure gcc is up to date
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" == "g++" ]]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" == "g++" ]]; then sudo apt-get update -qq; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" == "g++" ]]; then sudo apt-get install -qq g++-4.8; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CXX" == "g++" ]]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
-# set up nvm
+# set up nvm and install node
 - export PATH=./node_modules/.bin/:$PATH
 - rm -rf ~/.nvm/ && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
 - source ~/.nvm/nvm.sh
