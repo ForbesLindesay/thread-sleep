@@ -8,6 +8,12 @@
       "include_dirs": ["<!(node -e \"require('nan')\")"],
       'cflags': ['-std=c++11'],
       "conditions": [
+          ['OS=="solaris"', {
+            'cflags': [ '-pthreads' ],
+          }],
+          ['OS not in "solaris android"', {
+            'cflags': [ '-pthread' ],
+          }],
           [ 'OS=="mac"', {
               "xcode_settings": {
                   'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11','-stdlib=libc++', '-v'],
