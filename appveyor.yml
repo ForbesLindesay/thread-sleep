@@ -62,8 +62,6 @@ build_script:
   - cmd: node-gyp clean
   - cmd: npm uninstall -g node-gyp
   - cmd: rmdir /q /s node_modules
-
-after_build:
   - cmd: SET ARCH=x86
   - cmd: SET NODIST_X64=0
   - cmd: call nodist update
