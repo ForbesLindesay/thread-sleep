@@ -6,7 +6,6 @@
         "thread_sleep.cc"
       ],
       "include_dirs": ["<!(node -e \"require('nan')\")"],
-      'cflags': ['-std=c++11'],
       "conditions": [
           ['OS=="solaris"', {
             'cflags': [ '-pthreads' ],
@@ -16,7 +15,7 @@
           }],
           [ 'OS=="mac"', {
               "xcode_settings": {
-                  'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11','-stdlib=libc++', '-v'],
+                  'OTHER_CPLUSPLUSFLAGS' : ['-stdlib=libc++', '-v'],
                   'OTHER_LDFLAGS': ['-stdlib=libc++'],
                   'MACOSX_DEPLOYMENT_TARGET': '10.7',
                   'GCC_ENABLE_CPP_EXCEPTIONS': 'YES'
