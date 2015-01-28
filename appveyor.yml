@@ -4,92 +4,56 @@ environment:
     secure: SECURE_ENV_VAR
   node_pre_gyp_secretAccessKey:
     secure: SECURE_ENV_VAR
+  matrix:
+    - nodejs_version: "~0.10"
 
-os: unstable
-
-# This does not actually create builds with different windows architectures
-# It is mainly for MS Visual Studio reference
 platform:
   - x64
-
+  - x86
 
 install:
-- cmd: ECHO "APPVEYOR_REPO_COMMIT_MESSAGE ->"
-- cmd: ECHO %APPVEYOR_REPO_COMMIT_MESSAGE%
-- cmd: SET COMMIT_MSG="%APPVEYOR_REPO_COMMIT_MESSAGE%"
-- cmd: SET PUBLISH_BINARY=false
-- cmd: git describe --tags --always HEAD > _git_tag.tmp
-- cmd: SET /p GIT_TAG=<_git_tag.tmp
-- cmd: ECHO "LATEST LOCAL TAG:"
-- cmd: ECHO %GIT_TAG%
-- cmd: ECHO "APPVEYOR REPO BRANCH/TAG:"
-- cmd: ECHO %APPVEYOR_REPO_BRANCH%
-- cmd: DEL _git_tag.tmp
-# If we are building a tag commit we set PUBLISH_BINARY to true
-- cmd: IF x%APPVEYOR_REPO_BRANCH%==x%GIT_TAG% SET PUBLISH_BINARY=true
-# Or look for commit message containing `[publish binary]`
-- cmd: IF not x%COMMIT_MSG:[publish binary]=%==x%COMMIT_MSG% SET PUBLISH_BINARY=true
-- cmd: ECHO "Env Var PUBLISH_BINARY:"
-- cmd: ECHO %PUBLISH_BINARY%
-# Install nodist so we can use it to install node.js versions later
-- cmd: git clone https://github.com/marcelklehr/nodist.git c:\nodist 2>&1
-- cmd: SET PATH=C:\nodist\bin;%PATH%
-- cmd: SET NODIST_PREFIX=C:\nodist
+  - set ARCH=%PLATFORM%
+  - if x%ARCH%==xx64 set NODIST_X64=1
+  - if not x%ARCH%==xx64 set NODIST_X64=0
+  - git clone --depth=1 https://github.com/marcelklehr/nodist.git c:\nodist 2>&1
+  - set PATH=C:\nodist\bin;%PATH%
+  - set NODIST_PREFIX=C:\nodist
+  - call nodist %nodejs_version%
+  - npm update -g
+  - node --version
+  - npm --version
+  - npm install -g node-gyp node-pre-gyp
+  - npm install aws-sdk
 
 before_build:
-- cmd: SET ARCH=x64
-- cmd: SET NODIST_X64=1
-- cmd: call nodist update
-- cmd: call nodist stable
-- cmd: npm install -g node-gyp
-- cmd: SET APP_PATH=%CD%
-- cmd: CD %APP_PATH%
-- cmd: SET PKG_CONFIG_PATH=C:\GTK\lib\pkgconfig
-
-
-
+  - set COMMIT_MSG="%APPVEYOR_REPO_COMMIT_MESSAGE%"
+  - set PUBLISH_BINARY=false
+  - git describe --tags --always HEAD > _git_tag.tmp
+  - set /p GIT_TAG=<_git_tag.tmp
+  - echo %GIT_TAG%
+  - echo %APPVEYOR_REPO_BRANCH%
+  - del _git_tag.tmp
+# If we are building a tag commit we set PUBLISH_BINARY to true
+  - if x%APPVEYOR_REPO_BRANCH%==x%GIT_TAG% set PUBLISH_BINARY=true
+# Or look for commit message containing `[publish binary]`
+  - if not x%COMMIT_MSG:[publish binary]=%==x%COMMIT_MSG% set PUBLISH_BINARY=true
+  - echo %PUBLISH_BINARY%
+  - set APP_PATH=%cd%
+  - cd %APP_PATH%
 
 build_script:
-  - cmd: ECHO "BUILDING x64 binary package:"
+  - set
   # Make sure to use to pass --msvs_version=2013 to the npm install command
   # otherwise some bindings and libraries might now be available, an error will trigger
-  - cmd: npm install --build-from-source --msvs_version=2013
-  - cmd: npm test
-  - cmd: ECHO "PUBLISH x64 binary package:"
-  - cmd: npm install aws-sdk
-  - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
-  - cmd: node-pre-gyp clean
-  - cmd: node-gyp clean
-  - cmd: npm uninstall -g node-gyp
-  - cmd: rmdir /q /s node_modules
+  - npm install --build-from-source --msvs_version=2013
 
-after_build:
-  - cmd: SET ARCH=x86
-  - cmd: SET NODIST_X64=0
-  - cmd: call nodist update
-  - cmd: call nodist stable
-  - cmd: npm install -g node-gyp
-  - cmd: ECHO "BUILDING x86 binary package:"
-  # Make sure to use to pass --msvs_version=2013 to the npm install command
-  # otherwise some bindings and libraries might now be available, an error will trigger
-  - cmd: npm install --build-from-source --msvs_version=2013
-  - cmd: npm test
-  - cmd: ECHO "PUBLISH x86 binary package:"
-  - cmd: npm install aws-sdk
-  - cmd: IF %PUBLISH_BINARY%==true (node-pre-gyp package publish 2>&1)
-  - cmd: node-pre-gyp clean
-  - cmd: node-gyp clean
-  - cmd: rmdir /q /s node_modules
+test_script:
+  - npm test
 
+deploy_script:
+  - if %PUBLISH_BINARY%==true node-pre-gyp package publish 2>&1
+
+# test installing from binary package works
 on_success:
-  # test installing from binary package works
-  - cmd: ECHO "ON SUCCESS:"
-  - cmd: ECHO "Try installing from binary:"
-  #- cmd: IF %PUBLISH_BINARY%==true npm install --fallback-to-build=false
-  - cmd: npm install --fallback-to-build=false
-  # Print Available Binaries
-  - cmd: node-pre-gyp info
-
-test: OFF
-
-deploy: OFF
+  - if %PUBLISH_BINARY%==true npm install --fallback-to-build=false
+  - if %PUBLISH_BINARY%==true node-pre-gyp info
