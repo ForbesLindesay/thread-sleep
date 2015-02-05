@@ -30,7 +30,7 @@ before_build:
 # Or look for commit message containing `[publish binary]`
   - if not x%COMMIT_MSG:[publish binary]=%==x%COMMIT_MSG% set PUBLISH_BINARY=true
 # Or look for commit message containing `[publish binary windows]`
-  - if not x%COMMIT_MSG:[publish binary]=%==x%COMMIT_MSG% set PUBLISH_BINARY=true
+  - if not x%COMMIT_MSG:[publish binary windows]=%==x%COMMIT_MSG% set PUBLISH_BINARY=true
   - echo %PUBLISH_BINARY%
   - set APP_PATH=%cd%
   - cd %APP_PATH%
