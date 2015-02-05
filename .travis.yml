@@ -4,6 +4,11 @@ os:
 - linux
 - osx
 
+env:
+  matrix:
+    - NODE_VERSION="0.10"
+    - NODE_VERSION="iojs"
+
 # What we'll be using to compile
 compiler:
 - gcc
@@ -30,8 +35,8 @@ install:
 - rm -rf ~/.nvm/
 - git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
 - source ~/.nvm/nvm.sh
-- nvm install 0.10
-- nvm use 0.10
+- nvm install $NODE_VERSION
+- nvm use $NODE_VERSION
 
 # put local node-pre-gyp on PATH
 - export PATH=./node_modules/.bin/:$PATH
