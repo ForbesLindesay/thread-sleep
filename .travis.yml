@@ -57,9 +57,16 @@ before_script:
     echo 'PUBLISH_BINARY=true'
     PUBLISH_BINARY=true
   fi
-# if we are compiling with clang then don't publish
+# if we are compiling with clang on linux then don't publish
 - |
   if [ "$TRAVIS_OS_NAME" = 'linux' ] && [ "$CXX" = 'clang++' ]
+  then
+    echo 'PUBLISH_BINARY='
+    PUBLISH_BINARY=
+  fi
+# if we are compiling with gcc on mac then don't publish
+-
+  if [ "$TRAVIS_OS_NAME" = 'osx' ] && [ "$CXX" = 'g++' ]
   then
     echo 'PUBLISH_BINARY='
     PUBLISH_BINARY=
