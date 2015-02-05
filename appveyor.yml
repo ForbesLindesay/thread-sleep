@@ -13,6 +13,7 @@ install:
   - if not x%ARCH%==xx64 set NODIST_X64=0
   - git clone --depth=1 https://github.com/marcelklehr/nodist.git c:\nodist 2>&1
   - set PATH=C:\nodist\bin;%PATH%
+  - set PATH=node_modules\.bin;%PATH%
   - set NODIST_PREFIX=C:\nodist
   - call nodist %nodejs_version%
   - npm update -g
@@ -22,7 +23,6 @@ install:
   - npm install aws-sdk
 
 before_build:
-  - set PATH=C:\nodist\bin;%PATH%
   - set COMMIT_MSG="%APPVEYOR_REPO_COMMIT_MESSAGE%"
   - set PUBLISH_BINARY=false
   - git describe --tags --always HEAD > _git_tag.tmp
@@ -39,7 +39,6 @@ before_build:
   - cd %APP_PATH%
 
 build_script:
-  - set PATH=C:\nodist\bin;%PATH%
   # Make sure to use to pass --msvs_version=2013 to the npm install command
   # otherwise some bindings and libraries might now be available, an error will trigger
   - npm install --build-from-source --msvs_version=2013
@@ -48,11 +47,9 @@ test_script:
   - npm test
 
 deploy_script:
-  - set PATH=C:\nodist\bin;%PATH%
   - if %PUBLISH_BINARY%==true node-pre-gyp package publish 2>&1
 
 # test installing from binary package works
 on_success:
-  - set PATH=C:\nodist\bin;%PATH%
   - if %PUBLISH_BINARY%==true npm install --fallback-to-build=false
   - if %PUBLISH_BINARY%==true node-pre-gyp info
