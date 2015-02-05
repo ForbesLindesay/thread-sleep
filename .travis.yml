@@ -65,7 +65,7 @@ before_script:
     PUBLISH_BINARY=
   fi
 # if we are compiling with gcc on mac then don't publish
--
+- |
   if [ "$TRAVIS_OS_NAME" = 'osx' ] && [ "$CXX" = 'g++' ]
   then
     echo 'PUBLISH_BINARY='
