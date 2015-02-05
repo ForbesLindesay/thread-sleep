@@ -62,6 +62,26 @@ before_script:
     echo 'PUBLISH_BINARY=true'
     PUBLISH_BINARY=true
   fi
+# or if we put [publish binary linux] in the commit message
+- |
+  if git show -s --format=%B "$TRAVIS_COMMIT" | grep -Fq '[publish binary linux]'
+  then
+    if [ "$TRAVIS_OS_NAME" = 'linux' ]
+    then
+      echo 'PUBLISH_BINARY=true'
+      PUBLISH_BINARY=true
+    fi
+  fi
+# or if we put [publish binary osx] in the commit message
+- |
+  if git show -s --format=%B "$TRAVIS_COMMIT" | grep -Fq '[publish binary osx]'
+  then
+    if [ "$TRAVIS_OS_NAME" = 'osx' ]
+    then
+      echo 'PUBLISH_BINARY=true'
+      PUBLISH_BINARY=true
+    fi
+  fi
 # if we are compiling with clang on linux then don't publish
 - |
   if [ "$TRAVIS_OS_NAME" = 'linux' ] && [ "$CXX" = 'clang++' ]
