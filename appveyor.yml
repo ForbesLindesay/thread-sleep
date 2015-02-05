@@ -1,9 +1,5 @@
 # environment variables
 environment:
-  node_pre_gyp_accessKeyId:
-    secure: SECURE_ENV_VAR
-  node_pre_gyp_secretAccessKey:
-    secure: SECURE_ENV_VAR
   matrix:
     - nodejs_version: "~0.10"
 
@@ -26,6 +22,7 @@ install:
   - npm install aws-sdk
 
 before_build:
+  - set PATH=C:\nodist\bin;%PATH%
   - set COMMIT_MSG="%APPVEYOR_REPO_COMMIT_MESSAGE%"
   - set PUBLISH_BINARY=false
   - git describe --tags --always HEAD > _git_tag.tmp
@@ -42,7 +39,7 @@ before_build:
   - cd %APP_PATH%
 
 build_script:
-  - set
+  - set PATH=C:\nodist\bin;%PATH%
   # Make sure to use to pass --msvs_version=2013 to the npm install command
   # otherwise some bindings and libraries might now be available, an error will trigger
   - npm install --build-from-source --msvs_version=2013
@@ -51,9 +48,11 @@ test_script:
   - npm test
 
 deploy_script:
+  - set PATH=C:\nodist\bin;%PATH%
   - if %PUBLISH_BINARY%==true node-pre-gyp package publish 2>&1
 
 # test installing from binary package works
 on_success:
+  - set PATH=C:\nodist\bin;%PATH%
   - if %PUBLISH_BINARY%==true npm install --fallback-to-build=false
   - if %PUBLISH_BINARY%==true node-pre-gyp info
