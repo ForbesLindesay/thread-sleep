@@ -1,6 +1,6 @@
 {
   "name": "thread-sleep",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "A native module for when you just need node to back off for a few milliseconds",
   "keywords": [],
   "main": "index.js",
