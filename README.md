@@ -11,6 +11,8 @@ A native module for when you just need node to back off for a few milliseconds. 
 
     npm install thread-sleep
 
+This module uses node-pre-gyp so it should install even without a compiler in most environments.  If you run into any problems, please open an issue with the full npm log, and a description of what operating system you use.
+
 ## Usage
 
 ```js
