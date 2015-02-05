@@ -1,21 +1,15 @@
 # environment variables
 environment:
   matrix:
-    - nodejs_version: "~0.10"
+    - nodejs_version: "0.10"
+    - nodejs_version: "1.0"
 
 platform:
   - x64
   - x86
 
 install:
-  - set ARCH=%PLATFORM%
-  - if x%ARCH%==xx64 set NODIST_X64=1
-  - if not x%ARCH%==xx64 set NODIST_X64=0
-  - git clone --depth=1 https://github.com/marcelklehr/nodist.git c:\nodist 2>&1
-  - set PATH=C:\nodist\bin;%PATH%
-  - set PATH=node_modules\.bin;%PATH%
-  - set NODIST_PREFIX=C:\nodist
-  - call nodist %nodejs_version%
+  - ps: Install-Product node $env:nodejs_version $env:platform
   - npm update -g
   - node --version
   - npm --version
