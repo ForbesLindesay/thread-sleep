@@ -18,11 +18,11 @@
     "install": "node-pre-gyp install --fallback-to-build"
   },
   "binary": {
-      "module_name": "thread_sleep",
-      "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-      "remote_path" : "./{module_name}/v{version}/{configuration}/",
-      "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-      "host"        : "https://node-pre-gyp-forbeslindesay.s3.amazonaws.com"
+    "module_name": "thread_sleep",
+    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+    "remote_path": "./{module_name}/v{version}/{configuration}/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://node-pre-gyp-forbeslindesay.s3.amazonaws.com"
   },
   "repository": {
     "type": "git",
