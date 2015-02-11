@@ -18,11 +18,12 @@ install:
   - if x%ARCH%==xx64 set NODIST_X64=1
   - if not x%ARCH%==xx64 set NODIST_X64=0
   - git clone --depth=1 https://github.com/marcelklehr/nodist.git c:\nodist 2>&1
-  - set PATH=C:\nodist\bin;%PATH%
+  - set PATH=C:\node_modules\bin;C:\nodist\bin;%PATH%
   - set PATH=node_modules\.bin;%PATH%
   - set NODIST_PREFIX=C:\nodist
   - call nodist %nodejs_version%
-  - npm update -g
+  - npm config set prefix "C:\node_modules\bin"
+  - npm install -g npm
   - node --version
   - npm --version
   - npm install -g node-gyp node-pre-gyp
