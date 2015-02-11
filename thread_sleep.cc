@@ -1,9 +1,10 @@
 /*********************************************************************
- * NAN - Native Abstractions for Node.js
+ * thread-sleep: Force Node.js to sleep
  *
- * Copyright (c) 2014 NAN contributors
+ * Copyright (c) 2015 Forbes Lindesay
+ * Copyright (c) 2015 Tiancheng "Timothy" Gu
  *
- * MIT License <https://github.com/rvagg/nan/blob/master/LICENSE.md>
+ * MIT License
  ********************************************************************/
 #include <nan.h>
 #ifdef _WIN32
@@ -18,7 +19,6 @@ using v8::Object;
 using v8::String;
 using v8::Number;
 
-// Simple synchronous access to the `Estimate()` function
 NAN_METHOD(SleepSync) {
   NanScope();
 
@@ -37,10 +37,7 @@ NAN_METHOD(SleepSync) {
   NanReturnValue(NanNew<Number>(milisec));
 }
 
-
-
-// Expose synchronous and asynchronous access to our
-// Estimate() function
+// Expose SleepSync() as sleep() in JS
 void InitAll(Handle<Object> exports) {
   exports->Set(NanNew<String>("sleep"),
     NanNew<FunctionTemplate>(SleepSync)->GetFunction());
