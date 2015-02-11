@@ -6,6 +6,7 @@
  *
  * MIT License
  ********************************************************************/
+
 #include <nan.h>
 #ifdef _WIN32
 #include <windows.h>
@@ -23,18 +24,18 @@ NAN_METHOD(SleepSync) {
   NanScope();
 
   // expect a number as the first argument
-  int milisec = args[0]->Uint32Value();
+  int millisec = args[0]->Uint32Value();
 
 #ifdef _WIN32
-  Sleep(milisec);
+  Sleep(millisec);
 #else
   struct timespec req;
-  req.tv_sec = milisec / 1000;
-  req.tv_nsec = (milisec % 1000) * 1000000L;
+  req.tv_sec = millisec / 1000;
+  req.tv_nsec = (millisec % 1000) * 1000000L;
   nanosleep(&req, (struct timespec *)NULL);
 #endif
 
-  NanReturnValue(NanNew<Number>(milisec));
+  NanReturnValue(NanNew<Number>(millisec));
 }
 
 // Expose SleepSync() as sleep() in JS
