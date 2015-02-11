@@ -43,8 +43,6 @@ install:
 - export PATH=./node_modules/.bin/:$PATH
 # put global node-gyp on PATH
 - npm install node-gyp -g
-# install aws-sdk so it is available for publishing
-- npm install aws-sdk
 
 before_script:
 # figure out if we should publish

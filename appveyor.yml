@@ -27,7 +27,6 @@ install:
   - node --version
   - npm --version
   - npm install -g node-gyp node-pre-gyp
-  - npm install aws-sdk
 
 before_build:
   - set COMMIT_MSG="%APPVEYOR_REPO_COMMIT_MESSAGE%"
