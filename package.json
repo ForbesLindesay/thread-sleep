@@ -4,25 +4,20 @@
   "description": "A native module for when you just need node to back off for a few milliseconds",
   "keywords": [],
   "main": "index.js",
-  "gypfile": true,
   "dependencies": {
     "nan": "<2.0.0 >1.6.2 || 1.5.0",
     "node-pre-gyp": "^0.6.2"
   },
-  "devDependencies": {},
-  "bundledDependencies": [
-    "node-pre-gyp"
-  ],
   "scripts": {
     "test": "node test",
     "install": "node-pre-gyp install --fallback-to-build"
   },
   "binary": {
-      "module_name": "thread_sleep",
-      "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-      "remote_path" : "./{module_name}/v{version}/{configuration}/",
-      "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-      "host"        : "https://node-pre-gyp-forbeslindesay.s3.amazonaws.com"
+    "module_name": "thread_sleep",
+    "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+    "remote_path" : "./{module_name}/v{version}/{configuration}/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+    "host"        : "https://node-pre-gyp-forbeslindesay.s3.amazonaws.com"
   },
   "repository": {
     "type": "git",
