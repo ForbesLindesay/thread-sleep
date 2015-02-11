@@ -37,11 +37,11 @@ before_build:
   - echo %GIT_TAG%
   - echo %APPVEYOR_REPO_BRANCH%
   - del _git_tag.tmp
-# If we are building a tag commit we set PUBLISH_BINARY to true
+  # If we are building a tag commit we set PUBLISH_BINARY to true
   - if x%APPVEYOR_REPO_BRANCH%==x%GIT_TAG% set PUBLISH_BINARY=true
-# Or look for commit message containing `[publish binary]`
+  # Or look for commit message containing `[publish binary]`
   - if not x%COMMIT_MSG:[publish binary]=%==x%COMMIT_MSG% set PUBLISH_BINARY=true
-# Or look for commit message containing `[publish binary windows]`
+  # Or look for commit message containing `[publish binary windows]`
   - if not x%COMMIT_MSG:[publish binary windows]=%==x%COMMIT_MSG% set PUBLISH_BINARY=true
   - echo %PUBLISH_BINARY%
   - set APP_PATH=%cd%
