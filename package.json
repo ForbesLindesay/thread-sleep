@@ -10,9 +10,6 @@
     "node-pre-gyp": "^0.6.2"
   },
   "devDependencies": {},
-  "bundledDependencies": [
-    "node-pre-gyp"
-  ],
   "scripts": {
     "test": "node test",
     "install": "node-pre-gyp install --fallback-to-build"
