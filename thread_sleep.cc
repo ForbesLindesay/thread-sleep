@@ -20,15 +20,12 @@ using Nan::New;
 using Nan::Set;
 
 void SleepSync(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-#ifdef _WIN32
-  // expect a number as the first argument
-  DWORD millisec = info[0]->Uint32Value();
-
-  Sleep(millisec);
-#else
   // expect a number as the first argument
   uint32_t millisec = info[0]->Uint32Value();
 
+#ifdef _WIN32
+  Sleep(millisec);
+#else
   struct timespec req;
   req.tv_sec = millisec / 1000;
   req.tv_nsec = (millisec % 1000) * 1000000L;
