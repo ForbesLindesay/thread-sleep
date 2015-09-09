@@ -8,7 +8,8 @@ env:
   matrix:
     - NODE_VERSION="0.10"
     - NODE_VERSION="0.12"
-    - NODE_VERSION="iojs"
+    - NODE_VERSION="3"
+    - NODE_VERSION="4"
 
 # What we'll be using to compile
 compiler:
