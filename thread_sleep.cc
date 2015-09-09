@@ -15,14 +15,11 @@
 #endif
 
 using v8::FunctionTemplate;
-using v8::Handle;
-using v8::Object;
-using v8::String;
-using v8::Number;
+using Nan::GetFunction;
+using Nan::New;
+using Nan::Set;
 
-NAN_METHOD(SleepSync) {
-  NanScope();
-
+void SleepSync(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   // expect a number as the first argument
   int millisec = args[0]->Uint32Value();
 
@@ -35,13 +32,13 @@ NAN_METHOD(SleepSync) {
   nanosleep(&req, (struct timespec *)NULL);
 #endif
 
-  NanReturnValue(NanNew<Number>(millisec));
+  info.GetReturnValue().Set(millisec);
 }
 
 // Expose SleepSync() as sleep() in JS
-void InitAll(Handle<Object> exports) {
-  exports->Set(NanNew<String>("sleep"),
-    NanNew<FunctionTemplate>(SleepSync)->GetFunction());
+NAN_MODULE_INIT(InitAll) {
+  Set(target, New("sleep").ToLocalChecked(),
+    GetFunction(New<FunctionTemplate>(SleepSync)).ToLocalChecked());
 }
 
 NODE_MODULE(thread_sleep, InitAll)

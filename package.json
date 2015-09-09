@@ -5,7 +5,7 @@
   "keywords": [],
   "main": "index.js",
   "dependencies": {
-    "nan": "<2.0.0 >1.6.2 || 1.5.0",
+    "nan": "^2.0.9",
     "node-pre-gyp": "^0.6.2"
   },
   "devDependencies": {
