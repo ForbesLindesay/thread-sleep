@@ -23,7 +23,7 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-2.8
+      - g++-4.8
 
 install:
   # make sure gcc is up to date
