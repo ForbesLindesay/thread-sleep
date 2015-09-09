@@ -16,14 +16,20 @@ compiler:
   - gcc
   - clang
 
+sudo: false
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-2.8
+
 install:
   # make sure gcc is up to date
   - |
     if [ "$TRAVIS_OS_NAME" = 'linux' ] && [ "$CXX" = 'g++' ]
     then
-      sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
-      sudo apt-get update -qq                                && \
-      sudo apt-get install -qq g++-4.8                       && \
       export CXX='g++-4.8' CC='gcc-4.8'
     fi
   # insist we are using clang if we *are* using clang
@@ -32,14 +38,6 @@ install:
     then
       CLANG_OPTS='--clang=1'
     fi
-  # set up nvm and install node
-  - export PATH=./node_modules/.bin/:$PATH
-  - rm -rf ~/.nvm/
-  - git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
-  - source ~/.nvm/nvm.sh
-  - nvm install $NODE_VERSION
-  - nvm use $NODE_VERSION
-
   # put local node-pre-gyp on PATH
   - export PATH=./node_modules/.bin/:$PATH
   # put global node-gyp on PATH
