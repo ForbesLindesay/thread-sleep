@@ -14,13 +14,19 @@ try {
   sleep(-10);
   throw new Error('sleep with a negative number should throw an error');
 } catch (ex) {
-  assert(ex instanceof TypeError);
+  assert(ex instanceof RangeError);
 }
 try {
   sleep(1.5);
   throw new Error('sleep with a non-integer should throw an error');
 } catch (ex) {
   assert(ex instanceof TypeError);
+}
+try {
+  sleep(Math.pow(2, 64));
+  throw new Error('sleep with a very large integer should throw an error');
+} catch (ex) {
+  assert(ex instanceof RangeError);
 }
 
 function abs(value) {
