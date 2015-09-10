@@ -1,19 +1,20 @@
-language: node_js
+language: cpp
 
 os:
   - linux
   - osx
 
-node_js:
-  - 0.10
-  - 0.12
-  - 3
-  - 4
+env:
+  matrix:
+    - NODE_VERSION="0.10"
+    - NODE_VERSION="0.12"
+    - NODE_VERSION="3"
+    - NODE_VERSION="4"
 
 # What we'll be using to compile
-env:
-  - CC=gcc CXX=g++
-  - CC=clang CXX=clang++
+compiler:
+  - gcc
+  - clang
 
 sudo: false
 
@@ -37,6 +38,12 @@ install:
     then
       CLANG_OPTS='--clang=1'
     fi
+  # set up nvm and install node
+  - rm -rf ~/.nvm/
+  - git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
+  - source ~/.nvm/nvm.sh
+  - nvm install $NODE_VERSION
+  - nvm use $NODE_VERSION
   # put local node-pre-gyp on PATH
   - export PATH=./node_modules/.bin/:$PATH
   # put global node-gyp on PATH
