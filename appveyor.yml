@@ -16,7 +16,7 @@ platform:
 
 install:
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - set PATH=node_module/.bin;%APPDATA%\npm;%PATH%
+  - set PATH=node_modules\.bin;%APPDATA%\npm;%PATH%
   - npm update -g
   - node --version
   - npm --version
