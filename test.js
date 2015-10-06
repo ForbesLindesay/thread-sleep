@@ -32,6 +32,8 @@ try {
 var start = Date.now();
 var res = sleep(1000);
 var end = Date.now();
+console.log('Time as returned by sleep():', res);
+console.log('Time counted on our own:    ', end - start);
 assert(Math.abs(1000 - res) < 100);
 assert(Math.abs(1000 - (end - start)) < 100);
 
