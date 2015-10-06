@@ -14,7 +14,11 @@ function sleep(milliseconds) {
     throw new RangeError('sleep duration out of range')
   }
   milliseconds = milliseconds | 0;
-  childProcess.execFileSync(nodeBin, [ '-e', 'setTimeout(function(){},' + milliseconds + ')']);
+
+  var shouldEnd = start + milliseconds;
+  childProcess.execFileSync(nodeBin, [ '-e',
+    'setTimeout(function() {}, ' + shouldEnd + ' - Date.now());'
+  ]);
   var end = Date.now();
   return end - start;
 }
