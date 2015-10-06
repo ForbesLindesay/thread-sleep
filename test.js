@@ -29,13 +29,10 @@ try {
   assert(ex instanceof RangeError);
 }
 
-function abs(value) {
-  return (value < 0) ? value * -1 : value;
-}
 var start = Date.now();
 var res = sleep(1000);
 var end = Date.now();
-assert(abs(1000 - res) < 100);
-assert(abs(1000 - (end - start)) < 100);
+assert(Math.abs(1000 - res) < 100);
+assert(Math.abs(1000 - (end - start)) < 100);
 
 console.log('tests passed');
