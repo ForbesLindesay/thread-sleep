@@ -1,29 +1,12 @@
 {
   "name": "thread-sleep",
-  "version": "1.0.4",
-  "description": "A native module for when you just need node to back off for a few milliseconds",
-  "keywords": [],
+  "version": "2.0.0",
+  "description": "A module for when you just need node to back off for a few milliseconds",
+  "keywords": ["sleep"],
+  "engines": { "node": ">=0.11.12" },
   "main": "index.js",
-  "dependencies": {
-    "nan": "^2.0.9",
-    "node-pre-gyp": "^0.6.2"
-  },
-  "devDependencies": {
-    "aws-sdk": "^2.1.9"
-  },
-  "bundledDependencies": [
-    "node-pre-gyp"
-  ],
   "scripts": {
-    "test": "node test",
-    "install": "node-pre-gyp install --fallback-to-build"
-  },
-  "binary": {
-    "module_name": "thread_sleep",
-    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-    "remote_path": "./{module_name}/v{version}/{configuration}/",
-    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://node-pre-gyp-forbeslindesay.s3.amazonaws.com"
+    "test": "node test"
   },
   "repository": {
     "type": "git",

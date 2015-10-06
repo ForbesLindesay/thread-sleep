@@ -1,9 +1,7 @@
 'use strict';
 
-var binary = require('node-pre-gyp');
-var path = require('path');
-var binding_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
-var binding = require(binding_path);
+var childProcess = require('child_process');
+var nodeBin = process.argv[0];
 
 module.exports = sleep;
 function sleep(milliseconds) {
@@ -16,7 +14,7 @@ function sleep(milliseconds) {
     throw new RangeError('sleep duration out of range')
   }
   milliseconds = milliseconds | 0;
-  var result = binding.sleep(milliseconds);
+  childProcess.execFileSync(nodeBin, [ '-e', 'setTimeout(function(){},' + milliseconds + ')']);
   var end = Date.now();
   return end - start;
 }
