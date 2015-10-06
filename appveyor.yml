@@ -1,20 +1,22 @@
-# environment variables
-environment:
-  matrix:
-    - nodejs_version: "0.12"
-    - nodejs_version: "3"
-    - nodejs_version: "4"
-
 platform:
   - x64
-  - x86
 
-install:
-  - ps: Install-Product node $env:nodejs_version $env:platform
+build: off
+
+test_script:
   - set PATH=node_modules\.bin;%APPDATA%\npm;%PATH%
+  - ps: Install-Product node 0.12 $env:platform
   - npm update -g
   - node --version
   - npm --version
-
-test_script:
+  - npm test
+  - ps: Install-Product node 3 $env:platform
+  - npm update -g
+  - node --version
+  - npm --version
+  - npm test
+  - ps: Install-Product node 4 $env:platform
+  - npm update -g
+  - node --version
+  - npm --version
   - npm test
