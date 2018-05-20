@@ -13,7 +13,6 @@ function sleep(milliseconds) {
   } else if (milliseconds !== (milliseconds | 0)) {
     throw new RangeError('sleep duration out of range')
   }
-  milliseconds = milliseconds | 0;
 
   var shouldEnd = start + milliseconds;
   childProcess.execFileSync(nodeBin, [ '-e',
