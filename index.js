@@ -16,9 +16,17 @@ function sleep(milliseconds) {
   milliseconds = milliseconds | 0;
 
   var shouldEnd = start + milliseconds;
-  childProcess.execFileSync(nodeBin, [ '-e',
-    'setTimeout(function() {}, ' + shouldEnd + ' - Date.now());'
-  ]);
+  try {
+    childProcess.execFileSync(nodeBin, [ '-e',
+      'setTimeout(function() {}, ' + shouldEnd + ' - Date.now());'
+    ], {
+      timeout: milliseconds,
+    });
+  } catch (ex) {
+    if (ex.code !== 'ETIMEDOUT') {
+      throw ex;
+    }
+  }
   var end = Date.now();
   return end - start;
 }
