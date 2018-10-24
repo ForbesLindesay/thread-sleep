@@ -15,10 +15,9 @@ function sleep(milliseconds) {
   }
   milliseconds = milliseconds | 0;
 
-  var shouldEnd = start + milliseconds;
   try {
     childProcess.execFileSync(nodeBin, [ '-e',
-      'setTimeout(function() {}, ' + shouldEnd + ' - Date.now());'
+      'setTimeout(function() {}, ' + milliseconds + ');'
     ], {
       timeout: milliseconds,
     });
