@@ -4,6 +4,7 @@ var childProcess = require('child_process');
 var nodeBin = process.argv[0];
 
 module.exports = sleep;
+module.exports.default = sleep;
 function sleep(milliseconds) {
   var start = Date.now();
   if (milliseconds !== Math.floor(milliseconds)) {
